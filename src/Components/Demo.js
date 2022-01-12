@@ -2,10 +2,6 @@ import React, { useState } from 'react'
 import './Demo.css';
 
 function Demo(props) {
-
-    const [copied, setCopied] = useState([]);
-    const [destination, setDestination] = useState([])
-
     const employees = [
         {
             name: "Prakash1",
@@ -64,8 +60,15 @@ function Demo(props) {
         },
     ]
 
+    const [copied, setCopied] = useState([]);
+    const [name, setName] = useState([]);
+    const [id, setId] = useState([]);
+    const [street, setStreet] = useState([]);
+    const [pin, setPin] = useState([]);
+    const [email, setEmail] = useState([]);
+    const [mob, setMob] = useState([]);
 
-    const onCopy = (key) => {
+    const onDrag = (key) => {
         const arr = []
         employees.map((item) => {
             arr.push({ [key]: item[key] })
@@ -75,7 +78,6 @@ function Demo(props) {
 
     console.log({ copied })
     const Card = ({ employees, title = "" }) => {
-
 
         return (
             <>
@@ -100,12 +102,11 @@ function Demo(props) {
 
                                     {
                                         Object.keys(item).map((key) => {
-                                            console.log(typeof [], item[key])
-
+                                            // console.log(typeof [], item[key])
 
                                             return (
                                                 <div className="card card-body cardBody">
-                                                    {typeof item[key] != "object" ? <button onClick={() => onCopy(key)}>{key}:{item[key]}</button> :
+                                                    {typeof item[key] != "object" ? <button draggable onDragStart={() => { onDrag(key) }}>{key}:{item[key]}</button> :
                                                         < Card employees={item[key]} title={key} />
                                                     }
                                                 </div>
@@ -130,14 +131,31 @@ function Demo(props) {
             <div>
                 <ul className='unorderedList'>
 
-                    <button onClick={() => { setDestination(copied) }}>Name {destination.map((item) => {
+                    <button onDragEnd={() => { setName(copied) }}>Name {name.map((item) => {
                         return item.name + ", "
                     }) ?? ""}</button>
-                    <button href="#">Id</button>
-                    <button href="#">Street</button>
-                    <button href="#">Pincode</button>
-                    <button href="#">Email</button>
-                    <button href="#">Phone</button>
+
+                    <button onClick={() => { setId(copied) }}>Id {id.map((item) => {
+                        return item.id + ", "
+                    }) ?? ""}</button>
+
+                    <button onClick={() => { setStreet(copied) }}>Street {street.map((item) => {
+                        return item.street + ", "
+                    }) ?? ""}</button>
+
+                    <button onClick={() => { setPin(copied) }}>Pincode {pin.map((item) => {
+                        return item.pin + ", "
+                    }) ?? ""}</button>
+
+                    <button onClick={() => { setEmail(copied) }}>Email {email.map((item) => {
+                        return item.pin + ", "
+                    }) ?? ""}</button>
+
+                    <button onClick={() => { setMob(copied) }}>Phone {mob.map((item) => {
+                        return item.pin + ", "
+                    }) ?? ""}</button>
+
+
                 </ul>
             </div>
         </div>
